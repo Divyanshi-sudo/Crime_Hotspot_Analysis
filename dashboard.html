@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0f2d, #1a1a40);
+      color: #fefefe;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      height: 100px;
+    }
+
+    .header div {
+      margin-left: 15px;
+      padding: 8px 16px;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      height: 30px;
+      align-items: center;
+      padding-top: 15px;
+    }
+
+    .header div:hover {
+      background: rgba(0, 120, 255, 0.6);
+      box-shadow: 0 0 10px #0078ff;
+    }
+
+    .title {
+      align-items: center;
+      margin-right: 290px;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0,212,255,0.7);
+    }
+
+    .heading{
+        margin-bottom: 40px;
+    }
+    .tabs {
+      margin: 30px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 50px;
+      margin-bottom: 60px;
+
+    }
+
+    .tab-buttons button {
+      padding: 12px 20px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+      width: 150px;
+    }
+
+    .tab-buttons button.active {
+      background: linear-gradient(135deg, #0078ff, #00d4ff);
+      box-shadow: 0 0 10px #00d4ff;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      color: white;
+      text-align: center;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    
+    }
+
+    .card {
+      padding: 20px;
+      margin-left: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <p class="title">Dashboard</p>
+    <a href="crimeRecord.html" style="text-decoration: none;"><div>Crime Records</div></a>
+    <a href="addCrime.html" style="text-decoration: none;"><div>Add Crime</div></a>
+    <a href="CrimeHotspotAnalysis.html" style="text-decoration: none;">
+      <div>Home</div>
+    </a>
+  </div>
+
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="active" onclick="openTab('stats')">Stats</button>
+      <button onclick="openTab('graphs')">Graphs</button>
+    </div>
+
+    <div id="stats" class="tab-content glass active">
+      <h3 class="heading">Crime Statistics</h3>
+      <div class="stats">
+        <div class="card">Total Crime<br>120</div>
+        <div class="card">Open Cases<br>45</div>
+        <div class="card">Closed Cases<br>75</div>
+        <div class="card">Resolution Rate<br>62%</div>
+      </div>
+    </div>
+
+    <div id="graphs" class="tab-content glass">
+      <h3>Graphs Section</h3>
+      <p>Graphs will be displayed here...</p>
+    </div>
+  </div>
+
+  <script>
+    function openTab(tabId) {
+      const contents = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-buttons button');
+
+      contents.forEach(c => c.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

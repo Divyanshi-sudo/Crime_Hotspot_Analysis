@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f0f2d, #1a1a40);
+      color: #ffffff;
+    }
+    
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      height: 100px;
+    }
+
+    .header div {
+      margin-left: 15px;
+      padding: 8px 16px;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      height: 30px;
+      align-items: center;
+      padding-top: 15px;
+    }
+
+    .header div:hover {
+      background: rgba(0, 120, 255, 0.6);
+      box-shadow: 0 0 10px #0078ff;
+    }
+
+    .title {
+      align-items: center;
+      margin-right: 180px;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #00d4ff;
+      text-shadow: 0 0 10px rgba(0,212,255,0.7);
+    }
+
+
+    .middle-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      
+    }
+
+    .middle-buttons button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0078ff, #00d4ff);
+      color: white;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .middle-buttons button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00d4ff;
+    }
+
+.graphs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.graphs button {
+  all: unset;             
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 320px;
+  width: 430px;
+  margin-left: 10px;
+  padding: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: #1a1a40;
+}
+
+.graphs button:hover {
+  box-shadow: 0 0 15px #00d4ff;
+  transform: scale(1.02);
+}
+
+    #heatmap {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+    }
+
+    .tabs {
+      margin: 30px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .tab-buttons button {
+      padding: 12px 20px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .tab-buttons button.active {
+      background: linear-gradient(135deg, #0078ff, #00d4ff);
+      box-shadow: 0 0 10px #00d4ff;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border-radius: 12px;
+      color: white;
+      text-align: center;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+   
+  <div class="header">
+    <p class="title">Crime Hotspot Analysis </p></a>
+    <a href="crimeRecord.html" style="text-decoration: none;">
+    <div>Crime Records</div></a>
+    <a href="addCrime.html"style="text-decoration: none;">
+    <div>Add Crime</div></a>
+    <a href="settings.html">
+    <div>Settings</div></a>
+  </div></a>
+
+  <div class="middle-buttons">
+    <a href="dashboard.html">
+    <button> View Dashboard</button></a>
+    <a href="exploreHotspot.html">
+    <button>Explore Hotspot</button></a> 
+  </div>
+
+<div class="graphs"><a href="dashboard.html">
+  <button class="graph glass">
+    <canvas id="barChart"></canvas>
+  </button></a>
+
+  <a href="dashboard.html">
+  <button class="graph glass">
+    <canvas id="pieChart"></canvas>
+  </button></a>
+
+  <a href="exploreHotspot.html">
+  <button class="graph glass">
+    <div id="heatmap"></div>
+  </button></a>
+</div>
+
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="active" onclick="openTab('hotspot')">Hotspot Identified</button>
+      <button onclick="openTab('summary')">Crime Summary</button>
+    </div>
+
+    <div id="hotspot" class="tab-content glass active">
+      <h3>Hotspots Identified</h3>
+      <p>List of high-crime areas will appear here...</p>
+    </div>
+
+    <div id="summary" class="tab-content glass">
+      <h3>Total Crime, Predicted Crime, High Risk</h3>
+      <p>Total Crimes: 120</p>
+      <p>Predicted Crimes: 85</p>
+      <p>High Risk Areas: 5</p>
+    </div>
+  </div>
+
+  <script>
+    function openTab(tabId) {
+      const contents = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.tab-buttons button');
+
+      contents.forEach(c => c.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    new Chart(document.getElementById('barChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Theft', 'Assault', 'Robbery', 'Fraud', 'Homicide'],
+        datasets: [{
+          label: 'Crime Count',
+          data: [50, 30, 20, 15, 5],
+          backgroundColor: ['#ff4c4c','#ffa534','#4caf50','#2196f3','#9c27b0']
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: 'white' } } },
+        scales: {
+          x: { ticks: { color: 'white' } },
+          y: { ticks: { color: 'white' } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('pieChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Theft', 'Assault', 'Robbery', 'Fraud', 'Homicide'],
+        datasets: [{
+          data: [50, 30, 20, 15, 5],
+          backgroundColor: ['#ff4c4c','#ffa534','#4caf50','#2196f3','#9c27b0']
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: 'white' } } }
+      }
+    });
+
+   
+    const map = L.map('heatmap').setView([28.6139, 77.2090], 11); 
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    const crimePoints = [
+      [28.7041, 77.1025],
+      [28.5355, 77.3910],
+      [28.4595, 77.0266]
+    ];
+    crimePoints.forEach(p => 
+      L.circle(p, {radius: 500, color: 'red', fillColor: 'red', fillOpacity: 0.5}).addTo(map)
+    );
+  </script>
+
+</body>
+</html>
