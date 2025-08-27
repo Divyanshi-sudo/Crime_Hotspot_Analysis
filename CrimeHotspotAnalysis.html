@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Crime Hotspot Analysis</title>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -13,34 +13,33 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0f2d, #1a1a40);
-      color: #ffffff;
+      background: linear-gradient(135deg, #e6f0ff, #f9fbff); 
+      color: #2c3e50;
     }
     
     .glass {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 12px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .header {
       display: flex;
       justify-content: flex-end;
       padding: 12px 20px;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(6px);
       height: 100px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     .header div {
       margin-left: 15px;
       padding: 8px 16px;
       margin-top: 30px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: rgba(0, 123, 255, 0.12);
+      color: #333;
       border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
@@ -50,20 +49,20 @@
     }
 
     .header div:hover {
-      background: rgba(0, 120, 255, 0.6);
-      box-shadow: 0 0 10px #0078ff;
+      background: rgba(0, 123, 255, 0.25);
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    
     }
 
     .title {
       align-items: center;
       margin-right: 180px;
-      font-size: 32px;
+      font-size: 30px;
       font-weight: bold;
       letter-spacing: 1px;
-      color: #00d4ff;
-      text-shadow: 0 0 10px rgba(0,212,255,0.7);
+      color: #3566a0;
+      text-shadow: 0 0 4px rgba(53, 102, 160, 0.2);
     }
-
 
     .middle-buttons {
       display: flex;
@@ -71,7 +70,6 @@
       gap: 40px;
       margin-top: 30px;
       margin-bottom: 20px;
-      
     }
 
     .middle-buttons button {
@@ -80,43 +78,46 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      background: linear-gradient(135deg, #0078ff, #00d4ff);
-      color: white;
+      background: linear-gradient(135deg, #5c88c4, #7aa6d6);
+      color: #fff;
       font-weight: 600;
       transition: 0.3s;
     }
 
     .middle-buttons button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px #00d4ff;
+      box-shadow: 0 0 10px rgba(92, 136, 196, 0.3);
     }
 
-.graphs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+    .graphs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   padding: 20px;
   text-align: center;
 }
 
-.graphs button {
-  all: unset;             
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 320px;
-  width: 430px;
-  margin-left: 10px;
-  padding: 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  background-color: #1a1a40;
-}
 
-.graphs button:hover {
-  box-shadow: 0 0 15px #00d4ff;
-  transform: scale(1.02);
-}
+    .graphs button {
+      all: unset;             
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 320px;
+      width: 430px;
+      margin-left: 10px;
+      padding: 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .graphs button:hover {
+      box-shadow: 0 6px 14px rgba(92, 136, 196, 0.25);
+      transform: scale(1.02);
+    }
 
     #heatmap {
       width: 100%;
@@ -138,8 +139,8 @@
     .tab-buttons button {
       padding: 12px 20px;
       border: none;
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
+      background: rgba(0, 0, 0, 0.05);
+      color: #333;
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
@@ -147,16 +148,19 @@
     }
 
     .tab-buttons button.active {
-      background: linear-gradient(135deg, #0078ff, #00d4ff);
-      box-shadow: 0 0 10px #00d4ff;
+      background: linear-gradient(135deg, #5c88c4, #7aa6d6);
+      box-shadow: 0 0 8px rgba(92, 136, 196, 0.3);
+      color: #fff;
     }
 
     .tab-content {
       display: none;
       padding: 20px;
       border-radius: 12px;
-      color: white;
+      color: #333;
       text-align: center;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .tab-content.active {
@@ -172,7 +176,7 @@
     <div>Crime Records</div></a>
     <a href="addCrime.html"style="text-decoration: none;">
     <div>Add Crime</div></a>
-    <a href="settings.html">
+    <a href="settings.html"style="text-decoration: none;">
     <div>Settings</div></a>
   </div></a>
 
@@ -183,21 +187,21 @@
     <button>Explore Hotspot</button></a> 
   </div>
 
-<div class="graphs"><a href="dashboard.html">
-  <button class="graph glass">
-    <canvas id="barChart"></canvas>
-  </button></a>
+  <div class="graphs"><a href="dashboard.html">
+    <button class="graph glass">
+      <canvas id="barChart"></canvas>
+    </button></a>
 
-  <a href="dashboard.html">
-  <button class="graph glass">
-    <canvas id="pieChart"></canvas>
-  </button></a>
+    <a href="dashboard.html">
+    <button class="graph glass">
+      <canvas id="pieChart"></canvas>
+    </button></a>
 
-  <a href="exploreHotspot.html">
-  <button class="graph glass">
-    <div id="heatmap"></div>
-  </button></a>
-</div>
+    <a href="exploreHotspot.html">
+    <button class="graph glass">
+      <div id="heatmap"></div>
+    </button></a>
+  </div>
 
   <div class="tabs">
     <div class="tab-buttons">
@@ -205,12 +209,12 @@
       <button onclick="openTab('summary')">Crime Summary</button>
     </div>
 
-    <div id="hotspot" class="tab-content glass active">
+    <div id="hotspot" class="tab-content active">
       <h3>Hotspots Identified</h3>
       <p>List of high-crime areas will appear here...</p>
     </div>
 
-    <div id="summary" class="tab-content glass">
+    <div id="summary" class="tab-content">
       <h3>Total Crime, Predicted Crime, High Risk</h3>
       <p>Total Crimes: 120</p>
       <p>Predicted Crimes: 85</p>
@@ -237,14 +241,14 @@
         datasets: [{
           label: 'Crime Count',
           data: [50, 30, 20, 15, 5],
-          backgroundColor: ['#ff4c4c','#ffa534','#4caf50','#2196f3','#9c27b0']
+          backgroundColor: ['#e57373','#ffb74d','#81c784','#64b5f6','#ba68c8']
         }]
       },
       options: {
-        plugins: { legend: { labels: { color: 'white' } } },
+        plugins: { legend: { labels: { color: '#333' } } },
         scales: {
-          x: { ticks: { color: 'white' } },
-          y: { ticks: { color: 'white' } }
+          x: { ticks: { color: '#333' } },
+          y: { ticks: { color: '#333' } }
         }
       }
     });
@@ -255,15 +259,14 @@
         labels: ['Theft', 'Assault', 'Robbery', 'Fraud', 'Homicide'],
         datasets: [{
           data: [50, 30, 20, 15, 5],
-          backgroundColor: ['#ff4c4c','#ffa534','#4caf50','#2196f3','#9c27b0']
+          backgroundColor: ['#e57373','#ffb74d','#81c784','#64b5f6','#ba68c8']
         }]
       },
       options: {
-        plugins: { legend: { labels: { color: 'white' } } }
+        plugins: { legend: { labels: { color: '#333' } } }
       }
     });
 
-   
     const map = L.map('heatmap').setView([28.6139, 77.2090], 11); 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
