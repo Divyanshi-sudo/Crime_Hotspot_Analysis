@@ -9,44 +9,44 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0f2d, #1a1a40);
-      color: #fefefe;
+      background: linear-gradient(135deg, #e6f0ff, #f9fbff); 
+      color: #2c3e50;
     }
 
     .glass {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.05);
       border-radius: 12px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
+
     .header {
       display: flex;
       justify-content: flex-end;
       padding: 12px 20px;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.9);
       height: 100px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
 
     .header div {
       margin-left: 15px;
       padding: 8px 16px;
       margin-top: 30px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: rgba(0, 123, 255, 0.12);
+      color: #333;
       border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
       height: 30px;
       align-items: center;
       padding-top: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
     }
 
     .header div:hover {
-      background: rgba(0, 120, 255, 0.6);
-      box-shadow: 0 0 10px #0078ff;
+      background: rgba(0, 123, 255, 0.25);
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
     }
 
     .title {
@@ -55,11 +55,10 @@
       font-size: 32px;
       font-weight: bold;
       letter-spacing: 1px;
-      color: #00d4ff;
-      text-shadow: 0 0 10px rgba(0,212,255,0.7);
+      color: #2a5d9f;
+      text-shadow: none;
     }
-
-    /* Form Section */
+    
     .form-section {
       margin: 50px auto;
       max-width: 700px;
@@ -77,32 +76,33 @@
       margin-bottom: 8px;
       font-weight: 600;
       font-size: 16px;
+      color: #333;
     }
 
     .form-group select,
     .form-group input {
       width: 100%;
       padding: 12px;
-      border: none;
+      border: 1px solid #ccc;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
+      background: #fff;
+      color: #333;
       font-size: 15px;
       outline: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
-    #properWidth{
-        width: 677px;
+    #properWidth {
+      width: 677px;
     }
-
 
     .form-group select option {
-      background: #1a1a40;
-      color: #fff;
+      background: #fff;
+      color: #333;
     }
 
     .form-group input::placeholder {
-      color: rgba(255,255,255,0.6);
+      color: #888;
     }
   </style>
 </head>
@@ -153,6 +153,5 @@
       <input type="number" id="radius" placeholder="Enter radius in km">
     </div>
   </div>
-
 </body>
 </html>
